@@ -3,20 +3,20 @@
 import sys
 from src import main
 
-if len(sys.argv) == 2 and sys.argv[1] == '--help':
-    print('')
-    print('O script aguarda os seguintes parâmetros:')
-    print('')
-    print('    Arquivo ou diretório de origem (Opcional): Endereço do arquivo ou diretório com a estrutura da especificação.')
-    print('    Arquivo ou diretório de destino (Opcional): Endereço do arquivo ou diretório com o resultado padronizado da especificação.')
-    print('\n')
-    print('Notas:')
-    print('')
-    print('    * Não sendo passados os parâmetros, os endereços serão considerados o local do script.')
-    print('    * Não sendo passados o parâmetro do arquivo ou diretório de destino, será considerado o diretório de origem também para o destino.')
-    print('    * Não sendo especificado o nome considerados aos arquivos serão swagger-struts.yaml.')
-    print('')
+if len(sys.argv) == 2 and sys.argv[1] in ['--help', '-h']:
+    namefile = '.'.join(__file__.split('.')[:-1])
+
+    print('Usage: py ' + namefile + ' [options] [arguments]')
+
+    print('\nOptions:')
+    print('  -h, --help                 print this help message')
+
+    print('\nArguments:')
+    print('  argument 1 (optional)     address of the source file or directory')
+    print('  argument 2 (optional)     address of the destination file or directory')
     
+    print('\nDocumentation can be found at https://github.com/vagnerpraia/swagger_struts/')
+
 elif len(sys.argv) == 1:
     main.execute()
     
@@ -27,4 +27,4 @@ elif len(sys.argv) == 3:
     main.execute(sys.argv[1], sys.argv[2])
     
 else:
-    print('Comando inválido. Utilize o comando \'' + sys.argv[0] + ' help\' para ter mais informações.')
+    print('Invalid command. Use the -help or -h option to have more information.')
