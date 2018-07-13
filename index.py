@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import sys
-from startup import execute
+from src import main
 
 if len(sys.argv) == 2 and sys.argv[1] == '--help':
     print('')
@@ -18,13 +18,13 @@ if len(sys.argv) == 2 and sys.argv[1] == '--help':
     print('')
     
 elif len(sys.argv) == 1:
-    execute()
+    main.execute()
     
 elif len(sys.argv) == 2:
-    execute(sys.argv[1])
+    main.execute(sys.argv[1])
     
 elif len(sys.argv) == 3:
-    execute(sys.argv[1], sys.argv[2])
+    main.execute(sys.argv[1], sys.argv[2])
     
 else:
     print('Comando inválido. Utilize o comando \'' + sys.argv[0] + ' help\' para ter mais informações.')

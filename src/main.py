@@ -1,12 +1,10 @@
 # coding: utf-8
 
 from os import path
-
-from io_file import read_file, write_new_file, write_append_file
-from util import get_bar_type
+from src import io_file, util
 
 def execute(origin = '', destination = ''):
-    bar = get_bar_type()
+    bar = util.get_bar_type()
     default_filename = 'swagger_struts.yaml'
 
     origin_file = ''
@@ -28,8 +26,8 @@ def execute(origin = '', destination = ''):
         else:
             destination_file = directory_origin + bar + default_filename
     
-    origin_data = read_file(origin_file)
+    origin_data = io_file.read_file(origin_file)
 
-    write_new_file(destination_file, origin_data)
+    io_file.write_new_file(destination_file, origin_data)
 
     # TODO: Escrever arquivo observando a estrutura do diretório.
