@@ -11,10 +11,10 @@ def read_file(file):
 
     return data
 
-def write_new_file(file, data):
+def write_file(file, data):
     with open(file, 'w') as f:
         f.write(data)
 
-def write_append_file(file, data):
+def append_file(file, data):
     with open(file, 'a') as f:
         f.write(data)

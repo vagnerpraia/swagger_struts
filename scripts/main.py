@@ -3,7 +3,7 @@
 from os import path
 
 from scripts.util import get_bar_type
-from scripts.io import read_file, write_new_file
+from scripts.io import read_file, write_file
 
 def execute(origin = '', destination = ''):
     bar = get_bar_type()
@@ -30,6 +30,6 @@ def execute(origin = '', destination = ''):
     
     origin_data = read_file(origin_file)
 
-    write_new_file(destination_file, origin_data)
+    write_file(destination_file, origin_data)
 
     # TODO: Escrever arquivo observando a estrutura do diretório.
