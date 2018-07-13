@@ -7,6 +7,8 @@ from scripts.utils.util import get_bar_type
 from scripts.utils.io import read_file, write_file
 
 def execute(command = '', origin = '', destination = ''):
+    response = None
+
     bar = get_bar_type()
     default_command = 'new'
     default_filename = 'swagger_struts.yaml'
@@ -17,17 +19,25 @@ def execute(command = '', origin = '', destination = ''):
 
     if command is '':
         file_command = path_commands + default_command + extension_file_command
-        command_execute = path_import_commands + default_command
+        file_module_command = path_import_commands + default_command
     else:
         file_command = path_commands + command + extension_file_command
-        command_execute = path_import_commands + command
+        file_module_command = path_import_commands + command
 
     if path.isfile(file_command):
-        __import__(command_execute)
-        mymodule = modules[command_execute]
-        print('Teste 1')
+        exec('import %s' % file_module_command)
+        module_command = modules[file_module_command]
+        
+        object_command = {
+            'origin': origin,
+            'destination': destination
+        }
+
+        response = module_command.execute(object_command)
     else:
-        return 'Invalid command. Use the --help or -h option to have more information.'
+        response = 'Invalid command. Use the --help or -h option to have more information.'
+
+    return response
 
     origin_file = ''
     directory_origin = ''
