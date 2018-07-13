@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from os import path
+from os import path, walk
 from scripts.utils.io import read_file, write_file
 
 def execute(arguments = {}):
@@ -28,9 +28,17 @@ def execute(arguments = {}):
             destination_file = directory_origin + bar_type + default_filename
     
     origin_data = read_file(origin_file)
-
     write_file(destination_file, origin_data)
 
-    # TODO: Escrever arquivo observando a estrutura do diretório.
+    result_data = {}
+    for dirname, dirnames, filenames in walk(directory_origin):
+        for filename in filenames:
+            structure_file = path.join(dirname, filename).split(directory_origin)[1].lstrip('\\/"')
+            list_structure_file = structure_file.split(bar_type)
+
+            for name in list_structure_file:
+                if name == filename:
+                    print(name)
+                    # TODO: Montar objeto.
 
     return 'Mounted specification.'
