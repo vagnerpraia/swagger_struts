@@ -1,4 +1,4 @@
 # coding: utf-8
 
 def execute():
-    return None
+    return 'Created new project.'

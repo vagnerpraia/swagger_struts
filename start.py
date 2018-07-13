@@ -7,6 +7,8 @@ path.append(getcwd())
 
 from scripts.main import execute
 
+responde = ''
+
 if len(argv) == 2 and argv[1] in ['--help', '-h']:
     namefile = '.'.join(__file__.split('.')[:-1])
 
@@ -26,16 +28,18 @@ if len(argv) == 2 and argv[1] in ['--help', '-h']:
     print('\nDocumentation can be found at https://github.com/vagnerpraia/swagger_struts/')
 
 elif len(argv) == 1:
-    execute()
+    responde = execute()
     
 elif len(argv) == 2:
-    execute(argv[1])
+    responde = execute(argv[1])
     
 elif len(argv) == 3:
-    execute(argv[1], argv[2])
+    responde = execute(argv[1], argv[2])
     
 elif len(argv) == 4:
-    execute(argv[1], argv[2], argv[3])
-    
+    responde = execute(argv[1], argv[2], argv[3])
+
 else:
-    print('Invalid command. Use the --help or -h option to have more information.')
+    responde = 'Invalid command. Use the --help or -h option to have more information.'
+
+print(responde)

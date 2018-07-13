@@ -1,6 +1,7 @@
 # coding: utf-8
 
-from os import getcwd, listdir, path
+from os import path
+from sys import modules
 
 from scripts.utils.util import get_bar_type
 from scripts.utils.io import read_file, write_file
@@ -10,11 +11,23 @@ def execute(command = '', origin = '', destination = ''):
     default_command = 'new'
     default_filename = 'swagger_struts.yaml'
 
-    path_commands = path.dirname(__file__) + bar + 'commands'
-    list_commands = ['.'.join(x.split('.')[:-1]) for x in listdir(path_commands)]
-    
-    if command not in list_commands:
-        return None
+    path_commands = path.dirname(__file__) + bar + 'commands' + bar
+    path_import_commands = 'scripts.commands.' 
+    extension_file_command = '.py'
+
+    if command is '':
+        file_command = path_commands + default_command + extension_file_command
+        command_execute = path_import_commands + default_command
+    else:
+        file_command = path_commands + command + extension_file_command
+        command_execute = path_import_commands + command
+
+    if path.isfile(file_command):
+        __import__(command_execute)
+        mymodule = modules[command_execute]
+        print('Teste 1')
+    else:
+        return 'Invalid command. Use the --help or -h option to have more information.'
 
     origin_file = ''
     directory_origin = ''
