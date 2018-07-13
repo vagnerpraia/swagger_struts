@@ -1,13 +1,20 @@
 # coding: utf-8
 
-from os import path
+from os import getcwd, listdir, path
 
 from scripts.utils.util import get_bar_type
 from scripts.utils.io import read_file, write_file
 
-def execute(origin = '', destination = ''):
+def execute(command = '', origin = '', destination = ''):
     bar = get_bar_type()
+    default_command = 'new'
     default_filename = 'swagger_struts.yaml'
+
+    path_commands = path.dirname(__file__) + bar + 'commands'
+    list_commands = ['.'.join(x.split('.')[:-1]) for x in listdir(path_commands)]
+    
+    if command not in list_commands:
+        return None
 
     origin_file = ''
     directory_origin = ''

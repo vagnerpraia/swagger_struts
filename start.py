@@ -1,12 +1,13 @@
 # coding: utf-8
 
-import sys
-import os
-sys.path.append(os.getcwd())
+from sys import path, argv
+from os import getcwd
+
+path.append(getcwd())
 
 from scripts.main import execute
 
-if len(sys.argv) == 2 and sys.argv[1] in ['--help', '-h']:
+if len(argv) == 2 and argv[1] in ['--help', '-h']:
     namefile = '.'.join(__file__.split('.')[:-1])
 
     print('Usage: py ' + namefile + ' [options] [command] [arguments]')
@@ -24,14 +25,17 @@ if len(sys.argv) == 2 and sys.argv[1] in ['--help', '-h']:
     
     print('\nDocumentation can be found at https://github.com/vagnerpraia/swagger_struts/')
 
-elif len(sys.argv) == 1:
+elif len(argv) == 1:
     execute()
     
-elif len(sys.argv) == 2:
-    execute(sys.argv[1])
+elif len(argv) == 2:
+    execute(argv[1])
     
-elif len(sys.argv) == 3:
-    execute(sys.argv[1], sys.argv[2])
+elif len(argv) == 3:
+    execute(argv[1], argv[2])
+    
+elif len(argv) == 4:
+    execute(argv[1], argv[2], argv[3])
     
 else:
     print('Invalid command. Use the --help or -h option to have more information.')
