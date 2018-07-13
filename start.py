@@ -9,14 +9,18 @@ from scripts.main import execute
 if len(sys.argv) == 2 and sys.argv[1] in ['--help', '-h']:
     namefile = '.'.join(__file__.split('.')[:-1])
 
-    print('Usage: py ' + namefile + ' [options] [arguments]')
+    print('Usage: py ' + namefile + ' [options] [command] [arguments]')
 
     print('\nOptions:')
-    print('  -h, --help                 print this help message')
+    print('  -h, --help         print this help message')
+
+    print('\nCommands:')
+    print('  new                create new project')
+    print('  mount              mount project following the contents of the source files')
 
     print('\nArguments:')
-    print('  argument 1 (optional)     address of the source file or directory')
-    print('  argument 2 (optional)     address of the destination file or directory')
+    print('  argument 1         address of the source file or directory')
+    print('  argument 2         address of the destination file or directory')
     
     print('\nDocumentation can be found at https://github.com/vagnerpraia/swagger_struts/')
 

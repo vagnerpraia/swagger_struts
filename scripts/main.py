@@ -2,8 +2,8 @@
 
 from os import path
 
-from scripts.util import get_bar_type
-from scripts.io import read_file, write_file
+from scripts.utils.util import get_bar_type
+from scripts.utils.io import read_file, write_file
 
 def execute(origin = '', destination = ''):
     bar = get_bar_type()
