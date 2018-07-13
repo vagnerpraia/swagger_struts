@@ -1,4 +1,5 @@
 # Swagger Struts
+Swagger Struts - Estruturador de documentação de API
 
 ## Utilização
 O script aguarda os seguintes argumentos:
