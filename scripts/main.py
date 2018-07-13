@@ -4,16 +4,15 @@ from os import path
 from sys import modules
 
 from scripts.utils.util import get_bar_type
-from scripts.utils.io import read_file, write_file
 
 def execute(command = '', origin = '', destination = ''):
     response = None
 
-    bar = get_bar_type()
     default_command = 'new'
     default_filename = 'swagger_struts.yaml'
+    bar_type = get_bar_type()
 
-    path_commands = path.dirname(__file__) + bar + 'commands' + bar
+    path_commands = path.dirname(__file__) + bar_type + 'commands' + bar_type
     path_import_commands = 'scripts.commands.' 
     extension_file_command = '.py'
 
@@ -30,7 +29,9 @@ def execute(command = '', origin = '', destination = ''):
         
         object_command = {
             'origin': origin,
-            'destination': destination
+            'destination': destination,
+            'default_filename': default_filename,
+            'bar_type': bar_type
         }
 
         response = module_command.execute(object_command)
@@ -38,28 +39,3 @@ def execute(command = '', origin = '', destination = ''):
         response = 'Invalid command. Use the --help or -h option to have more information.'
 
     return response
-
-    origin_file = ''
-    directory_origin = ''
-    destination_file = default_filename
-
-    if path.isfile(origin):
-        origin_file = origin
-        directory_origin = path.dirname(origin)
-    else:
-        origin_adjusted = origin.rstrip('\\/"')
-        if path.isdir(origin_adjusted):
-            directory_origin = origin_adjusted
-
-    if not path.isfile(destination):
-        destination_file = destination.rstrip('\\/"')
-        if path.isdir(destination_file):
-            destination_file += bar + default_filename
-        else:
-            destination_file = directory_origin + bar + default_filename
-    
-    origin_data = read_file(origin_file)
-
-    write_file(destination_file, origin_data)
-
-    # TODO: Escrever arquivo observando a estrutura do diretório.
