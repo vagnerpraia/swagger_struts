@@ -1,2 +1,0 @@
-py index.py {PATH_ORIGIN} {PATH_DESTINATION}
-exit
