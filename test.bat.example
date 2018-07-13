@@ -1,5 +1,5 @@
 cls
 @echo off
 chcp 65001
-py index.py {PATH_ORIGIN} {PATH_DESTINATION}
+py start.py {PATH_ORIGIN} {PATH_DESTINATION}
 exit
