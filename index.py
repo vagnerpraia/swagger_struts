@@ -27,4 +27,4 @@ elif len(sys.argv) == 3:
     main.execute(sys.argv[1], sys.argv[2])
     
 else:
-    print('Invalid command. Use the -help or -h option to have more information.')
+    print('Invalid command. Use the --help or -h option to have more information.')
