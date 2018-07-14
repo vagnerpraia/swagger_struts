@@ -1,7 +1,6 @@
 # coding: utf-8
 
 from os import path
-from json import dumps
 from yaml import safe_load
 
 def read_file(file):
@@ -14,10 +13,10 @@ def read_file(file):
     return data
 
 def read_yaml(file):
-    with open(file, 'r') as stream:
-        yaml_data = safe_load(stream)
-
-    data = dumps(yaml_data)
+    data = ''
+    
+    with open(file, 'r', encoding = 'utf-8') as f:
+        data = safe_load(f)
 
     return data
 

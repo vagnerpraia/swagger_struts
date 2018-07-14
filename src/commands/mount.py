@@ -27,9 +27,6 @@ def execute(arguments = {}):
             destination_file += bar_type + default_filename
         else:
             destination_file = directory_origin + bar_type + default_filename
-    
-    origin_data = read_file(origin_file)
-    write_file(destination_file, origin_data)
 
     result_data = {}
     for dirname, dirnames, filenames in walk(directory_origin):
@@ -49,7 +46,7 @@ def execute(arguments = {}):
 
                     file_content = '{}'
                     if type_name == '.yaml':
-                        yaml_content = str(read_yaml(path_file))
+                        yaml_content = read_yaml(path_file)
                         file_content = yaml_to_json(yaml_content)
                     elif type_name == '.json':
                         file_content = read_file(path_file)
@@ -60,12 +57,7 @@ def execute(arguments = {}):
                         code += 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
                     else:
                         code += 'result_data' + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
-                    
-                    #print('\n\n')
-                    #print(name)
-                    #print(file_content_adjusted)
-                    #print('\n\n')
-                    
+
                     eval(code)
 
                 else:
