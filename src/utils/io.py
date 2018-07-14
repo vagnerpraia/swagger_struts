@@ -8,13 +8,13 @@ def read_file(file):
     data = ''
 
     if path.isfile(file):
-        with open(file, 'r') as f:
+        with open(file, 'r', encoding = 'utf-8') as f:
             data = f.read()
 
     return data
 
 def read_yaml(file):
-    with open(file, 'r', encoding='utf-8') as stream:
+    with open(file, 'r') as stream:
         yaml_data = safe_load(stream)
 
     data = dumps(yaml_data)

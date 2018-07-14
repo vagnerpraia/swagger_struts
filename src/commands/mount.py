@@ -2,6 +2,7 @@
 
 from os import path, walk
 from src.utils.io import read_file, read_yaml, write_file
+from src.utils.format import yaml_to_json
 
 def execute(arguments = {}):
     origin = arguments['origin']
@@ -43,23 +44,28 @@ def execute(arguments = {}):
 
                 if name == filename:
                     object_name = '.'.join(name.split('.')[:-1])
+                    type_name = name.replace(object_name, '')
                     path_file = dirname + bar_type + filename
 
                     file_content = '{}'
-                    if '.yaml' in name:
-                        file_content = str(read_yaml(path_file))
-                    else:
+                    if type_name == '.yaml':
+                        yaml_content = str(read_yaml(path_file))
+                        file_content = yaml_to_json(yaml_content)
+                    elif type_name == '.json':
                         file_content = read_file(path_file)
 
-                    if list_path:
-                        code += 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content + '})'
-                    else:
-                        code += 'result_data' + '.update({\'' + object_name + '\': ' + file_content + '})'
-                    
-                    print('\n\n')
-                    print(file_content)
-                    print('\n\n')
+                    file_content_adjusted = file_content.replace('true', 'True').replace('false', 'False')
 
+                    if list_path:
+                        code += 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
+                    else:
+                        code += 'result_data' + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
+                    
+                    #print('\n\n')
+                    #print(name)
+                    #print(file_content_adjusted)
+                    #print('\n\n')
+                    
                     eval(code)
 
                 else:
