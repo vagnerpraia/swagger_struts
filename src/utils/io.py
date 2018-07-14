@@ -1,7 +1,9 @@
 # coding: utf-8
 
 from os import path
-import yaml
+from json import dumps
+from yaml import safe_load
+
 def read_file(file):
     data = ''
 
@@ -12,11 +14,11 @@ def read_file(file):
     return data
 
 def read_yaml(file):
-    print()
-    print(file)
-    print()
-    yaml_file = read_file(file)
-    data = yaml.load(yaml_file)
+    with open(file, 'r', encoding='utf-8') as stream:
+        yaml_data = safe_load(stream)
+
+    data = dumps(yaml_data)
+
     return data
 
 def write_file(file, data):
