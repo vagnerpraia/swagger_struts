@@ -36,9 +36,35 @@ def execute(arguments = {}):
             structure_file = path.join(dirname, filename).split(directory_origin)[1].lstrip('\\/"')
             list_structure_file = structure_file.split(bar_type)
 
+            code = ''
             for name in list_structure_file:
-                if name == filename:
-                    print(name)
-                    # TODO: Montar objeto.
+                list_path = [x for x in list_structure_file if list_structure_file.index(x) < list_structure_file.index(name)]
+                list_path_adjusted = str(list_path).replace(', ', '][')
 
+                if name == filename:
+                    object_name = '.'.join(name.split('.')[:-1])
+                    path_file = dirname + bar_type + filename
+
+                    file_content = '{}'
+                    if '.yaml' in name:
+                        #file_content = read_file(path_file)
+                        None
+                    else:
+                        file_content = read_file(path_file)
+
+                    if list_path:
+                        code += 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content + '})'
+                    else:
+                        code += 'result_data' + '.update({\'' + object_name + '\': ' + file_content + '})'
+
+                    eval(code)
+
+                else:
+                    if list_path:
+                        code += 'result_data' + list_path_adjusted + '.update({\'' + name + '\': {}}),'
+                    else:
+                        code += 'result_data' + '.update({\'' + name + '\': {}}),'
+    
+    write_file(destination_file, str(result_data))
+    
     return 'Mounted specification.'

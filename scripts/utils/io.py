@@ -1,9 +1,18 @@
 # coding: utf-8
 
 from os import path
-
+import yaml
 def read_file(file):
     data = ''
+
+    if path.isfile(file):
+        with open(file, 'r') as f:
+            data = f.read()
+
+    return data
+
+def read_yaml(file):
+    data = {}
 
     if path.isfile(file):
         with open(file, 'r') as f:
