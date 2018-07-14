@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from os import path, walk
-from src.utils.io import read_file, write_file
+from src.utils.io import read_file, read_yaml, write_file
 
 def execute(arguments = {}):
     origin = arguments['origin']
@@ -47,8 +47,7 @@ def execute(arguments = {}):
 
                     file_content = '{}'
                     if '.yaml' in name:
-                        #file_content = read_file(path_file)
-                        None
+                        file_content = str(read_yaml(path_file))
                     else:
                         file_content = read_file(path_file)
 
@@ -56,6 +55,10 @@ def execute(arguments = {}):
                         code += 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content + '})'
                     else:
                         code += 'result_data' + '.update({\'' + object_name + '\': ' + file_content + '})'
+                    
+                    print('\n\n')
+                    print(file_content)
+                    print('\n\n')
 
                     eval(code)
 
