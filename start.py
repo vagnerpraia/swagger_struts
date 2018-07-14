@@ -5,7 +5,7 @@ from os import getcwd
 
 path.append(getcwd())
 
-from scripts.main import execute
+from src.main import execute
 
 responde = ''
 
