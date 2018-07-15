@@ -66,6 +66,7 @@ def execute(arguments = {}):
                     else:
                         code += 'result_data' + '.update({\'' + name + '\': {}}),'
     
-    write_file(destination_file, str(result_data))
+    result_data_adjusted = str(result_data).replace('\'', '"').replace('True', 'true').replace('False', 'false')
+    write_file(destination_file, result_data_adjusted)
     
     return 'Mounted specification.'
