@@ -43,7 +43,7 @@ def execute(arguments = {}):
                 list_path.insert(0, name_object_root)
                 list_path_adjusted = str(list_path).replace(', ', '][')
 
-                code = '{}'
+                code = ''
                 if name == filename:
                     object_name = '.'.join(name.split('.')[:-1])
                     type_name = name.replace(object_name, '')
@@ -63,16 +63,15 @@ def execute(arguments = {}):
 
                         if (directory_name + bar_type + filename) == origin_file:
                             object_name = name_object_root
-                            code = 'result_data' + list_path_adjusted + '.update(' + file_content_adjusted + '),'
+                            code = 'result_data' + list_path_adjusted + '.update(' + file_content_adjusted + ')'
                         else:
-                            code = 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '}),'
+                            code = 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
                 else:
-                    code = 'result_data' + list_path_adjusted + '.update({\'' + name + '\': {}}),'   
+                    code = 'result_data' + list_path_adjusted + '.update({\'' + name + '\': {}})'   
                     
-                if code:
-                    if code not in list_code:
-                        eval(code)                        
-                        list_code.append(code)
+                if code and code not in list_code:
+                    eval(code)                        
+                    list_code.append(code)
 
     result_data_adjusted = str(result_data)\
         .replace('\'', '"')\
