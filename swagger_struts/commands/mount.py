@@ -9,6 +9,7 @@ def execute(arguments = {}):
     destination = arguments['destination']
     default_filename = arguments['default_filename']
     bar_type = arguments['bar_type']
+    name_object_root = arguments['name_object_root']
 
     origin_file = ''
     origin_directory = ''
@@ -21,13 +22,15 @@ def execute(arguments = {}):
         if path.isdir(origin_adjusted):
             origin_directory = origin_adjusted
 
-    if not path.isfile(destination):
-        destination_file = destination.rstrip('\\/"')
-        if path.isdir(destination_file):
-            destination_file += bar_type + default_filename
-        else:
-            destination_file = origin_directory + bar_type + default_filename
+    destination_file = destination.rstrip('\\/"')
+    destination_directory_adjusted = bar_type.join(destination_file.split(bar_type)[:-1])
 
+    if path.isdir(destination_file):
+        destination_file += bar_type + default_filename
+    else:
+        if not path.isdir(destination_directory_adjusted):
+            destination_file = origin_directory + bar_type + default_filename
+    
     result_data = {}
     for directory_name, directory_names, filenames in walk(origin_directory):
         for filename in filenames:
@@ -53,10 +56,13 @@ def execute(arguments = {}):
 
                     file_content_adjusted = file_content.replace('true', 'True').replace('false', 'False')
 
+                    if (directory_name + bar_type + filename) == origin_file:
+                        object_name = name_object_root
+
                     if list_path:
                         code += 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
                     else:
-                        code += 'result_data' + '.update({\'root_swagger_struts\': ' + file_content_adjusted + '})'
+                        code += 'result_data' + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
 
                     eval(code)
 
@@ -70,8 +76,10 @@ def execute(arguments = {}):
         .replace('\'', '"')\
         .replace('True', 'true')\
         .replace('False', 'false')\
-        .replace('{"root_swagger_struts": ', '')
+        .replace('{"' + name_object_root + '": ', '')\
+
     result_data_adjusted = result_data_adjusted[:-1]
+
     write_file(destination_file, result_data_adjusted)
     
     return 'Mounted specification.'
