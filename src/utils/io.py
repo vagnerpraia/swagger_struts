@@ -21,9 +21,9 @@ def read_yaml(file):
     return data
 
 def write_file(file, data):
-    with open(file, 'w') as f:
+    with open(file, 'w', encoding = 'utf-8') as f:
         f.write(data)
 
 def append_file(file, data):
-    with open(file, 'a') as f:
+    with open(file, 'a', encoding = 'utf-8') as f:
         f.write(data)
