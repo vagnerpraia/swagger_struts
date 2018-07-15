@@ -11,27 +11,27 @@ def execute(arguments = {}):
     bar_type = arguments['bar_type']
 
     origin_file = ''
-    directory_origin = ''
+    origin_directory = ''
 
     if path.isfile(origin):
         origin_file = origin
-        directory_origin = path.dirname(origin)
+        origin_directory = path.dirname(origin)
     else:
         origin_adjusted = origin.rstrip('\\/"')
         if path.isdir(origin_adjusted):
-            directory_origin = origin_adjusted
+            origin_directory = origin_adjusted
 
     if not path.isfile(destination):
         destination_file = destination.rstrip('\\/"')
         if path.isdir(destination_file):
             destination_file += bar_type + default_filename
         else:
-            destination_file = directory_origin + bar_type + default_filename
+            destination_file = origin_directory + bar_type + default_filename
 
     result_data = {}
-    for dirname, dirnames, filenames in walk(directory_origin):
+    for directory_name, directory_names, filenames in walk(origin_directory):
         for filename in filenames:
-            structure_file = path.join(dirname, filename).split(directory_origin)[1].lstrip('\\/"')
+            structure_file = path.join(directory_name, filename).split(origin_directory)[1].lstrip('\\/"')
             list_structure_file = structure_file.split(bar_type)
 
             code = ''
@@ -42,7 +42,7 @@ def execute(arguments = {}):
                 if name == filename:
                     object_name = '.'.join(name.split('.')[:-1])
                     type_name = name.replace(object_name, '')
-                    path_file = dirname + bar_type + filename
+                    path_file = directory_name + bar_type + filename
 
                     file_content = '{}'
                     if type_name == '.yaml':
@@ -56,7 +56,7 @@ def execute(arguments = {}):
                     if list_path:
                         code += 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
                     else:
-                        code += 'result_data' + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
+                        code += 'result_data' + '.update({\'root_swagger_struts\': ' + file_content_adjusted + '})'
 
                     eval(code)
 
@@ -66,7 +66,12 @@ def execute(arguments = {}):
                     else:
                         code += 'result_data' + '.update({\'' + name + '\': {}}),'
     
-    result_data_adjusted = str(result_data).replace('\'', '"').replace('True', 'true').replace('False', 'false')
+    result_data_adjusted = str(result_data)\
+        .replace('\'', '"')\
+        .replace('True', 'true')\
+        .replace('False', 'false')\
+        .replace('{"root_swagger_struts": ', '')
+    result_data_adjusted = result_data_adjusted[:-1]
     write_file(destination_file, result_data_adjusted)
     
     return 'Mounted specification.'
