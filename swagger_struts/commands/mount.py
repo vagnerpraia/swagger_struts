@@ -63,8 +63,9 @@ def execute(arguments = {}):
 
                         if (directory_name + bar_type + filename) == origin_file:
                             object_name = name_object_root
-
-                        code = 'result_data' + list_path_adjusted + '.update(' + file_content_adjusted + '),'
+                            code = 'result_data' + list_path_adjusted + '.update(' + file_content_adjusted + '),'
+                        else:
+                            code = 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '}),'
                 else:
                     code = 'result_data' + list_path_adjusted + '.update({\'' + name + '\': {}}),'   
                     
