@@ -5,7 +5,7 @@ from os import getcwd
 
 path.append(getcwd())
 
-from src.main import execute
+from swagger_struts.main import execute
 
 responde = ''
 
@@ -42,4 +42,4 @@ elif len(argv) == 4:
 else:
     responde = 'Invalid command. Use the --help or -h option to have more information.'
 
-print(responde)
+print('\n' + str(responde) + '\n')

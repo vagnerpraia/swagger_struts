@@ -3,7 +3,7 @@
 from os import path
 from sys import modules
 
-from src.utils.util import get_bar_type
+from swagger_struts.utils.util import get_bar_type
 
 def execute(command = '', origin = '', destination = ''):
     response = None
@@ -13,7 +13,7 @@ def execute(command = '', origin = '', destination = ''):
     bar_type = get_bar_type()
 
     path_commands = path.dirname(__file__) + bar_type + 'commands' + bar_type
-    path_import_commands = 'src.commands.' 
+    path_import_commands = 'swagger_struts.commands.' 
     extension_file_command = '.py'
 
     if command is '':

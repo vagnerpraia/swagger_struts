@@ -1,8 +1,8 @@
 # coding: utf-8
 
 from os import path, walk
-from src.utils.io import read_file, read_yaml, write_file
-from src.utils.format import yaml_to_json
+from swagger_struts.utils.io import read_file, read_yaml, write_file
+from swagger_struts.utils.format import yaml_to_json
 
 def execute(arguments = {}):
     origin = arguments['origin']
