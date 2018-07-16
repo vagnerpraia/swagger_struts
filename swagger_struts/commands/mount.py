@@ -31,7 +31,7 @@ def execute(arguments = {}):
         if not path.isdir(destination_directory_adjusted):
             destination_file = origin_directory + bar_type + default_filename
 
-    result_data = {name_object_root: {}}
+    result_data = {}
     list_code = []
     for directory_name, directory_names, filenames in walk(origin_directory):
         for filename in filenames:
@@ -40,7 +40,6 @@ def execute(arguments = {}):
 
             for name in list_structure_file:
                 list_path = [x for x in list_structure_file if list_structure_file.index(x) < list_structure_file.index(name)]
-                list_path.insert(0, name_object_root)
                 list_path_adjusted = str(list_path).replace(', ', '][')
 
                 code = ''
@@ -61,13 +60,17 @@ def execute(arguments = {}):
                     if file_content:
                         file_content_adjusted = file_content.replace('true', 'True').replace('false', 'False')
 
-                        if (directory_name + bar_type + filename) == origin_file:
-                            object_name = name_object_root
-                            code = 'result_data' + list_path_adjusted + '.update(' + file_content_adjusted + ')'
+                        if str(list_path_adjusted) == '[]':
+                            code = 'result_data.update(' + file_content_adjusted + ')'
                         else:
                             code = 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
+                            
                 else:
-                    code = 'result_data' + list_path_adjusted + '.update({\'' + name + '\': {}})'   
+                    if str(list_path_adjusted) == '[]':
+                        code = 'result_data.update({\'' + name + '\': {}})'
+                    else:
+                        code = 'result_data' + list_path_adjusted + '.update({\'' + name + '\': {}})'
+                        
                     
                 if code and code not in list_code:
                     eval(code)                        
@@ -76,10 +79,7 @@ def execute(arguments = {}):
     result_data_adjusted = str(result_data)\
         .replace('\'', '"')\
         .replace('True', 'true')\
-        .replace('False', 'false')\
-        .replace('{"' + name_object_root + '": ', '')\
-
-    result_data_adjusted = result_data_adjusted[:-1]
+        .replace('False', 'false')
 
     write_file(destination_file, result_data_adjusted)
     
