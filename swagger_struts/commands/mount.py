@@ -9,7 +9,6 @@ def execute(arguments = {}):
     destination = arguments['destination']
     default_filename = arguments['default_filename']
     bar_type = arguments['bar_type']
-    name_object_root = arguments['name_object_root']
 
     origin_file = ''
     origin_directory = ''
@@ -41,6 +40,7 @@ def execute(arguments = {}):
             for name in list_structure_file:
                 list_path = [x for x in list_structure_file if list_structure_file.index(x) < list_structure_file.index(name)]
                 list_path_adjusted = str(list_path).replace(', ', '][')
+                flag_update_root = list_path_adjusted == '[]'
 
                 code = ''
                 if name == filename:
@@ -60,13 +60,13 @@ def execute(arguments = {}):
                     if file_content:
                         file_content_adjusted = file_content.replace('true', 'True').replace('false', 'False')
 
-                        if str(list_path_adjusted) == '[]':
+                        if flag_update_root:
                             code = 'result_data.update(' + file_content_adjusted + ')'
                         else:
                             code = 'result_data' + list_path_adjusted + '.update({\'' + object_name + '\': ' + file_content_adjusted + '})'
                             
                 else:
-                    if str(list_path_adjusted) == '[]':
+                    if flag_update_root:
                         code = 'result_data.update({\'' + name + '\': {}})'
                     else:
                         code = 'result_data' + list_path_adjusted + '.update({\'' + name + '\': {}})'

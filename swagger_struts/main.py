@@ -10,7 +10,6 @@ def execute(command = '', origin = '', destination = ''):
 
     default_command = 'new'
     default_filename = 'swagger_struts.yaml'
-    name_object_root = 'root_swagger_struts'
     bar_type = get_bar_type()
 
     path_commands = path.dirname(__file__) + bar_type + 'commands' + bar_type
@@ -32,8 +31,7 @@ def execute(command = '', origin = '', destination = ''):
             'origin': origin,
             'destination': destination,
             'default_filename': default_filename,
-            'bar_type': bar_type,
-            'name_object_root': name_object_root
+            'bar_type': bar_type
         }
 
         response = module_command.execute(object_command)
