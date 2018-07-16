@@ -2,7 +2,7 @@
 
 from os import path, walk
 from swagger_struts.utils.io import read_file, read_yaml, write_file
-from swagger_struts.utils.format import yaml_to_json
+from swagger_struts.utils.format import yaml_to_json, json_to_yaml
 
 def execute(arguments = {}):
     origin = arguments['origin']
@@ -81,6 +81,10 @@ def execute(arguments = {}):
         .replace('True', 'true')\
         .replace('False', 'false')
 
+    destination_type = destination_file.split('.')[-1]
+    if destination_type == 'yaml':
+        result_data_adjusted = json_to_yaml(result_data_adjusted)
+
     write_file(destination_file, result_data_adjusted)
-    
+
     return 'Mounted specification.'
